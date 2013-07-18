@@ -2,18 +2,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Almacenar información</title>
+<title>Geolocation</title>
 <script src="phonegap-1.1.0.js"></script>
 <script>
 
 document.addEventListener("deviceready", function() {
-	localStorage.setItem("nombre", "Jordi");
+	navigator.geolocation.getCurrentPosition(function(posicion) {
+		alert("Se te ha ubicado en " + posicion.coords.latitude + " y " +
+				posicion.coords.longitude);
+	}, function() {
+		alert("No se ha podido ubicar a tu dispositivo");
+	});
 	
-	// Leer
-	alert(localStorage.getItem("nombre"));
-	
-	// Eliminar
-	localStorage.clear();
+	navigator.compass.watchHeading(function(posicion) {
+		alert(posicion.magneticHeading);
+	}, function() {
+		alert("No se ha podido leer la brújula");
+	});
 }, false);
 
 </script>
